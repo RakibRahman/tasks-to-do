@@ -21,6 +21,21 @@ body {
   gap: 10px;
   align-items: center;
 }
+li span {
+  font-size: 20px;
+}
+.task-complete span {
+  text-decoration: line-through;
+}
+
 li button {
   margin-left: auto;
+  text-decoration: none !important;
+}
+li button:hover {
+  transition: all 0.3s;
+  background: red;
+}
+#clear {
+  display: none;
 }
