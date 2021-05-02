@@ -51,9 +51,7 @@ function provideTask(todos) {
   todos.forEach((todo, index) => {
     taskItems += `
     
-        <li class="draggable" draggable="true" data-id="${index}"${
-      todo.complete ? ' class="task-complete"' : ""
-    }>
+        <li data-id="${index}"${todo.complete ? ' class="task-complete"' : ""}>
         <input type="checkbox"${todo.complete ? " checked" : ""} />
         <span>${todo.label}</span>
         <button></button>
