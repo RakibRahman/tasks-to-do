@@ -10,10 +10,10 @@ body {
   place-items: center;
 }
 #taskList {
-  margin-top: 40px;
+  margin-top: 100px;
   border: 1px solid saddlebrown;
-  width: 80%;
-  min-width: 400px;
+  width: 100%;
+  max-width: 400px;
   padding: 20px 40px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -55,12 +55,13 @@ li span {
 
 li button {
   order: 3;
+  transition: all 0.3s;
+
   margin-left: auto;
-  text-decoration: none !important;
 }
 li button:hover {
-  transition: all 0.3s;
   background: red;
+  cursor: url(/img/cursor.png), pointer;
 }
 #clear {
   display: none;
@@ -70,6 +71,11 @@ li button:hover {
   border: none;
   width: 150px;
   font-size: 20px;
+}
+.taskCollection li {
+  border-bottom: 2px solid whitesmoke;
+  margin: 5px 0px;
+  padding-bottom: 5px;
 }
 .taskCollection li input[type="text"]:focus {
   outline: none;

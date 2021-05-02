@@ -18,7 +18,7 @@ app.innerHTML = `
                  
                  </form>
 
-                 <ul class="taskCollection"></ul>
+                 <ul id="items" class="taskCollection"></ul>
                     </div>
 
                     `;
@@ -199,3 +199,13 @@ function init() {
   clear.addEventListener("click", clearTask);
 }
 init();
+
+//!sort tasks
+
+window.Sortable = require("sortablejs");
+var el = document.getElementById("items");
+
+new Sortable(el, {
+  animation: 150,
+  ghostClass: "blue-background-class",
+});
