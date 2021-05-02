@@ -1,15 +1,16 @@
 const app = document.getElementById("app");
 
 app.innerHTML = `  
-                    <div class="taskList">
-                    <div class="header"></div>
-                    <h2 class="title">Tasks List</h2>
-                 <div>
+                    <div id="taskList">
+                    <div class="header">
+                    <h2 class="title">Tasks To Do</h2>
+                 <div id="infoArea">
                         <p>
                         <span class="count"></span>
                         tasks to complete
                         </p>
                         <button id="clear">Clear Completed ⭕</button>
+                 </div>
                  </div>
                  <form class="taskList-form" name="taskList">
                  
@@ -54,7 +55,9 @@ function provideTask(todos) {
 }
 function addTask(e) {
   e.preventDefault();
+
   const label = inputTask.value.trim();
+  if (!label) return false;
   const complete = false;
   todos = [...todos, { label, complete }];
   provideTask(todos);
@@ -83,7 +86,39 @@ function editTask(e) {
   }
   const id = parseInt(e.target.parentNode.getAttribute("data-id"), 10);
 
-  console.log("edit");
+  const taskLabel = todos[id].label;
+  console.log(taskLabel);
+  const input = document.createElement("input");
+  console.log(input);
+  input.type = "text";
+  input.value = taskLabel;
+
+  function handleEdit(e) {
+    e.stopPropagation();
+    const label = this.value;
+    if (label !== taskLabel) {
+      todos = todos.map((todo, index) => {
+        if (index === id) {
+          return {
+            ...todo,
+            label,
+          };
+        }
+        return todo;
+      });
+      provideTask(todos);
+      saveTask(todos);
+    }
+
+    e.target.style.display = "";
+    this.removeEventListener("change", handleEdit);
+    this.remove();
+  }
+
+  e.target.style.display = "none";
+  e.target.parentNode.append(input);
+  input.addEventListener("change", handleEdit);
+  input.focus();
 }
 function deleteTask(e) {
   if (e.target.tagName !== "BUTTON") {
@@ -91,24 +126,57 @@ function deleteTask(e) {
   }
 
   const id = parseInt(e.target.parentNode.getAttribute("data-id"), 10);
+
   const label = e.target.previousElementSibling.innerText;
-  console.log(label);
-  if (window.confirm(`Are you sure you want to delete ${label}?`)) {
-    todos = todos.filter((todo, index) => index !== id);
-    provideTask(todos);
-    saveTask(todos);
-  }
+
+  Swal.fire({
+    icon: "question",
+    iconColor: "green",
+    title: `Do you want to delete  <span class="delete">${label}</span> `,
+    showCancelButton: true,
+    confirmButtonText: `Yes`,
+    customClass: {
+      cancelButton: "order-1 right-gap",
+      confirmButton: "order-2",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      todos = todos.filter((todo, index) => index !== id);
+
+      provideTask(todos);
+      saveTask(todos);
+      Swal.fire("Deleted!", "", "error");
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
 }
 function clearTask() {
   const count = todos.filter((todo) => todo.complete).length;
   if (count === 0) {
     return;
   }
-  if (window.confirm(`Are you sure you want to delete ${count} tasks?`)) {
-    todos = todos.filter((todo) => !todo.complete);
-    provideTask(todos);
-    saveTask(todos);
-  }
+
+  Swal.fire({
+    icon: "question",
+    iconColor: "green",
+    title: `Do you want to delete  <span class="delete">${count}</span> tasks?`,
+    showCancelButton: true,
+    confirmButtonText: `Yes`,
+    customClass: {
+      cancelButton: "order-1 right-gap",
+      confirmButton: "order-2",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      todos = todos.filter((todo) => !todo.complete);
+      provideTask(todos);
+      saveTask(todos);
+      Swal.fire("Deleted!", "", "error");
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
 }
 
 function init() {
