@@ -30,7 +30,6 @@ const hint = document.getElementById("hint");
 btn.addEventListener("click", () => {
   hint.classList.toggle("hint");
   hint.classList.toggle("hint1");
-  console.log("d");
 });
 
 //! Todo
