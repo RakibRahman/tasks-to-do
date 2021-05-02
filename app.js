@@ -202,7 +202,6 @@ init();
 
 //!sort tasks
 
-window.Sortable = require("sortablejs");
 var el = document.getElementById("items");
 
 new Sortable(el, {
