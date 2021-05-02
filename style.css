@@ -9,11 +9,15 @@ body {
   display: grid;
   place-items: center;
 }
+#container {
+  padding: 15px;
+  position: relative;
+  width: 500px;
+}
 #taskList {
   margin-top: 100px;
   border: 1px solid saddlebrown;
   width: 100%;
-  max-width: 400px;
   padding: 20px 40px;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -26,7 +30,11 @@ body {
   text-align: center;
 }
 .title {
+  color: whitesmoke;
   font-size: 45px;
+}
+.count {
+  font-size: 20px;
 }
 .taskCollection {
   padding: 5px 10px;
@@ -45,7 +53,6 @@ li span {
   position: relative;
   font-size: 20px;
   flex-grow: 1;
-
   order: 2;
 }
 .task-complete span {
@@ -54,17 +61,38 @@ li span {
 }
 
 li button {
+  width: 25px;
+  height: 25px;
+  border: none;
   order: 3;
   transition: all 0.3s;
-
+  background: url(/img/icons8-add-trash-48.png);
+  background-size: cover;
+  background-repeat: no-repeat;
   margin-left: auto;
 }
 li button:hover {
-  background: red;
+  background: url(/img/icons8-delete-trash-48.png);
+  background-size: cover;
+  background-repeat: no-repeat;
   cursor: url(/img/cursor.png), pointer;
+  animation: pulse 1s ease-in 0s infinite forwards;
+}
+@keyframes pulse {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
 }
 #clear {
   display: none;
+  background: transparent;
+  color: whitesmoke;
+  font-weight: bold;
+  border: none;
+  cursor: help;
 }
 .taskCollection li input[type="text"] {
   background: none;
@@ -95,14 +123,17 @@ li button:hover {
   width: 100%;
   height: 30px;
   padding: 5 10px;
+  border-radius: 5px;
+  border: 0;
 }
 .delete {
   color: orangered;
 }
+
 #infoBTN {
   position: absolute;
-  left: 10px;
-  top: 10px;
+  right: 2rem;
+  top: 130px;
   width: 20px;
   background: transparent;
   border: none;
@@ -111,10 +142,49 @@ li button:hover {
 .hint {
   display: inline;
   position: absolute;
-  left: 35px;
-  top: 12px;
+  right: -14rem;
+  top: 130px;
   transition: all 0.5s ease-in-out;
+  color: white;
 }
 .hint1 {
   display: none;
+}
+.taskList-form input {
+  padding: 2px 5px;
+  color: #379683;
+  font-size: 16px;
+}
+.taskList-form input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 3px solid #f14e0d;
+}
+
+@media screen and (max-width: 550px) {
+  #container {
+    padding: 5px;
+    width: 100%;
+    max-width: 500px;
+  }
+}
+@media screen and (max-width: 450px) {
+  #infoArea {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+@media screen and (max-width: 960px) {
+  .hint {
+    position: absolute;
+    left: 10rem;
+    top: 5rem;
+  }
+}
+@media screen and (max-width: 406px) {
+  .hint {
+    position: absolute;
+    left: 2rem;
+    top: 5rem;
+  }
 }
