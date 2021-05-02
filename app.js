@@ -18,7 +18,7 @@ app.innerHTML = `
                  
                  </form>
 
-                 <ul id="items" class="taskCollection"></ul>
+                 <ul  class="taskCollection"></ul>
                     </div>
 
                     `;
@@ -26,7 +26,7 @@ app.innerHTML = `
 //! Info Btn
 const btn = document.getElementById("infoBTN");
 const hint = document.getElementById("hint");
-console.log(btn, hint);
+
 btn.addEventListener("click", () => {
   hint.classList.toggle("hint");
   hint.classList.toggle("hint1");
@@ -51,13 +51,17 @@ function provideTask(todos) {
   todos.forEach((todo, index) => {
     taskItems += `
     
-        <li data-id="${index}"${todo.complete ? ' class="task-complete"' : ""}>
+        <li class="draggable" draggable="true" data-id="${index}"${
+      todo.complete ? ' class="task-complete"' : ""
+    }>
         <input type="checkbox"${todo.complete ? " checked" : ""} />
         <span>${todo.label}</span>
-        <button>[x]</button>
+        <button></button>
         </li>
+      
     `;
   });
+
   taskCollection.innerHTML = taskItems;
   count.innerText = todos.filter((todo) => !todo.complete).length;
   clear.style.display = todos.filter((todo) => todo.complete).length
@@ -199,12 +203,3 @@ function init() {
   clear.addEventListener("click", clearTask);
 }
 init();
-
-//!sort tasks
-
-var el = document.getElementById("items");
-
-new Sortable(el, {
-  animation: 150,
-  ghostClass: "blue-background-class",
-});
