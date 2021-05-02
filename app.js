@@ -23,6 +23,17 @@ app.innerHTML = `
 
                     `;
 
+//! Info Btn
+const btn = document.getElementById("infoBTN");
+const hint = document.getElementById("hint");
+console.log(btn, hint);
+btn.addEventListener("click", () => {
+  hint.classList.toggle("hint");
+  hint.classList.toggle("hint1");
+  console.log("d");
+});
+
+//! Todo
 const form = document.forms.taskList;
 const inputTask = form.elements.task;
 const count = document.querySelector(".count");
